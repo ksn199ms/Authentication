@@ -1,0 +1,61 @@
+<section class="bodyColor">
+    <div class="container body col-md-4 h-75 p-3">
+        <input type="checkbox" id="check">
+        <div class="login form">
+            <header>Sign Up</header>
+           
+            <p style="color: red; text-align: center; margin-bottom: 10px">{{message}}</p>
+            <form action="/signup" method="post">
+                <input type="email" placeholder="Enter your email" id="email" name="email">
+                <input type="password" placeholder="Enter your password" id="password" name="password">
+                <input type="password" placeholder="Confirm your password" id="confirmPassword" name="confirmPassword">
+                <a href="#">Forgot password?</a>
+                <input type="submit" class="button" value="submit">
+            </form>
+            <div class="signup">
+                <span class="signup">Don't have an account?
+                    <a href="/login">Login</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('form').addEventListener('submit', formValidate);
+    });
+
+    function formValidate(e) {
+        e.preventDefault();
+
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+        var confirmPassword = document.getElementById('confirmPassword').value;
+
+        if (email == "" || password == "" || confirmPassword == "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "all fields are required!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+            return false;
+        } else if (password != confirmPassword) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "password doesn't match!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+            return false;
+        }
+
+        e.target.submit();
+        return true;
+    }
+
+
+
+
+</script>

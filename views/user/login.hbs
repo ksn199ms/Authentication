@@ -1,0 +1,50 @@
+
+<section class="bodyColor" >
+  <div class="container col-md-4 h-75 p-5 ">
+    
+    <div class="login form">
+      <header>Login</header>
+ 
+      <p style="color: red; text-align: center; margin-bottom: 10px">{{message}}</p>
+   
+      <form action="/login" method="post">
+        <input type="text" placeholder="Enter your email" id="email" name="email" >
+        <input type="password" placeholder="Enter your password" id="password" name="password">
+        <a href="#">Forgot password?</a>
+        <input type="submit" class="button" value="submit">
+      </form>
+      <div class="signup">
+        <span class="signup">Don't have an account?
+         <a href="/signup">SignUp</a>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('form').addEventListener('submit', formValidate);
+    });
+
+    function formValidate(e) {
+        e.preventDefault();
+
+        var email = document.getElementById('email').value;
+        var password = document.getElementById('password').value;
+
+        if (email == "" || password == "" ) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "all fields are required!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+            return false;
+        }
+
+        e.target.submit();
+        return true;
+    }
+</script>
