@@ -75,6 +75,53 @@ router.get('/logout', function(req, res, next) {
   res.redirect('/login');
 });
 
+router.get('/forgot', function(req, res, next) {
+  res.render('./user/forgotPassword');
+});
+
+router.post('/forgot', function(req, res) {
+  console.log(req.body);
+  userController.forgotPassword(req.body).then((response) => {
+    console.log(response)
+    if(response.status){
+      res.redirect('/verifyOTP');
+    }else{
+      res.render('./user/forgotPassword', {message : response.message});
+    }
+  })
+});
+
+router.get('/verifyOTP', function(req, res, next) {
+  res.render('./user/verifyOTP');
+});
+
+router.post('/verifyOTP', function(req, res) {
+  console.log(req.body);
+  userController.verifyOTP(req.body).then((response) => {
+    console.log(response)
+    if(response.status){
+      res.redirect('/resetPassword');
+    }else{
+      res.render('./user/verifyOTP', {message : response.message});
+    }
+  })
+});
+
+router.get('/resetPassword', function(req, res, next) {
+  res.render('./user/confirmPassword',);
+});
+
+router.post('/resetPassword', function(req, res) {
+  console.log(req.body);
+  userController.resetPassword(req.body).then((response) => {
+    if(response.status){  
+      res.redirect('/login');
+    }else{
+      res.render('./user/confirmPassword', {message : response.message});
+    }
+  })
+});
+   
 
 
 
