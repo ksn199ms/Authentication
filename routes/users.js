@@ -86,7 +86,8 @@ router.post('/forgot', function(req, res) {
     if(response.status){
       res.redirect('/verifyOTP');
     }else{
-      res.render('./user/forgotPassword', {message : response.message});
+      
+      res.render('./user/forgotPassword', {message : response.message });
     }
   })
 });
@@ -100,15 +101,15 @@ router.post('/verifyOTP', function(req, res) {
   userController.verifyOTP(req.body).then((response) => {
     console.log(response)
     if(response.status){
-      res.redirect('/resetPassword');
+      res.render('./user/confirmPassword',{email:response.email});
     }else{
-      res.render('./user/verifyOTP', {message : response.message});
+      res.render('./user/verifyOTP', {message : response.message, status : response.status, verifyOTPError: response.verifyOTPError });
     }
   })
 });
 
 router.get('/resetPassword', function(req, res, next) {
-  res.render('./user/confirmPassword',);
+  res.render('./user/confirmPassword');
 });
 
 router.post('/resetPassword', function(req, res) {

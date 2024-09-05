@@ -11,6 +11,9 @@
               <div class="panel-body">
                 <div class="text-center ">
                   <h3 style="text-align: center;"><i class="fa fa-lock fa-4x "></i></h3>
+                  {{#if verifyOTPError}}
+                  <p style="color: red; text-align: center;">{{message}}</p>
+                  {{/if}}
                   <h2 style="text-align: center;" class="text-center">Forgot Password?</h2>
                   <p style="text-align: center;">You can reset your password here.</p>
                   <div class="panel-body">
@@ -20,7 +23,7 @@
                       <div class="form-group">
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
-                          <input id="email" name="email" placeholder="Re-enter email address" class="form-control"  type="email" >
+                          <input id="email" name="email" placeholder="Re-enter email address" class="form-control"  type="email" value="{{email}}" >
                         </div>
                         <div class="input-group">
                           <span class="input-group-addon"><i class="glyphicon glyphicon-envelope color-blue"></i></span>
@@ -43,3 +46,38 @@
 	</div>
 </div>
 </section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('form').addEventListener('submit', formValidate);
+    });
+
+    function formValidate(e) {
+      e.preventDefault();
+       
+
+        var email = document.getElementById('email').value;
+        var otp = document.getElementById('otp').value;
+
+        if (email == "" || otp == "") {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "all fields are required!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+            return false;
+        }else if (otp.length != 6) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "OTP length should be 6!",
+                footer: '<a href="#">Why do I have this issue?</a>'
+            });
+            return false;
+        }else if        
+
+        e.target.submit();
+        return true;
+        }
+</script>

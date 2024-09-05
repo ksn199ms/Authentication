@@ -96,13 +96,13 @@ forgotPassword: (userData) => {
                         { $set: { otp: otp} }
                     );
 
-                    resolve({ status: true, message: "OTP sent successfully" });
+                    resolve({ status: true, message: "OTP sent successfully", otp: otp})
                 } catch (error) {
                     reject({ status: false, message: "Failed to send OTP email", error: error });
                 }
 
             } else {
-                resolve({ status: false, message: "Invalid Email" });
+                resolve({ status: false, message: "Invalid Email"});
             }
         }).catch((err) => {
             reject({ status: false, message: "An error occurred", error: err });
@@ -123,9 +123,9 @@ verifyOTP: (userData) => {
                 const otp = user.otp;
 
                 if (otp === enteredOtp) {
-                    resolve({ status: true, message: "OTP verified successfully" });
+                    resolve({ status: true, message: "OTP verified successfully",email:email });
                 } else {
-                    resolve({ status: false, message: "Invalid OTP" });
+                    resolve({ status: false, message: "Invalid OTP",verifyOTPError: true });
                 }
             } else {
                 resolve({ status: false, message: "Invalid Email" });
@@ -148,8 +148,8 @@ resetPassword:(userData) => {
                     userData.confirmPassword = hash;
                     db.get().collection('user').updateOne(
                         { email: email },
-                        { $set: { password: userData.password, confirmPassword: userData.confirmPassword } },
-                        { $set: { otp: null } }
+                        { $set: { password: userData.password, confirmPassword: userData.confirmPassword , otp: null} },
+                        // { $set: { otp: null } }
                     ).then((response) => {
                         resolve({ status: true, message: "Password reset successful" });
                     }).catch((err) => {
